@@ -13,7 +13,7 @@
 Name:		gstreamer
 Summary: 	GStreamer Streaming-media framework runtime
 Version: 	1.0.5
-Release: 	1
+Release: 	2
 License: 	LGPLv2+
 Group:		Sound
 URL:		http://gstreamer.freedesktop.org/
@@ -55,6 +55,7 @@ plugins.
 %package	tools
 Summary:	GStreamer Streaming-media framework runtime
 Group:		Sound
+%rename		%{name}-tools
 
 %description	tools
 GStreamer is a streaming-media framework, based on graphs of filters which
