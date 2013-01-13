@@ -55,7 +55,7 @@ plugins.
 %package	tools
 Summary:	GStreamer Streaming-media framework runtime
 Group:		Sound
-%rename		%{name}-tools
+Conflicts:	%{name}0.10-tools
 
 %description	tools
 GStreamer is a streaming-media framework, based on graphs of filters which
