@@ -55,8 +55,8 @@ plugins.
 %package	tools
 Summary:	GStreamer Streaming-media framework runtime
 Group:		Sound
-Conflicts:	%{name}0.10-tools
-Obsoletes:	gstreamer1.0-tools < 1.0.5-1
+%rename		gstreamer1.0-tools
+%rename		gstreamer0.10-tools
 
 %description	tools
 GStreamer is a streaming-media framework, based on graphs of filters which
@@ -69,7 +69,6 @@ plugins.
 %package -n	%{libname}
 Summary:	Library for GStreamer streaming-media framework
 Group:		System/Libraries
-Requires:	%{name}-tools >= %{EVRD}
 Provides:	libgstreamer%{api} = %{version}-%{release}
 
 %description -n	%{libname}
@@ -78,7 +77,6 @@ This package contains the library for %{name}.
 %package -n	%{libgstbase}
 Summary:	Library for GStreamer streaming-media framework
 Group:		System/Libraries
-Obsoletes:	%{_lib}gstreamer1.0_0 < 1.0.5-1
 
 %description -n	%{libgstbase}
 This package contains the library for %{name}base.
@@ -86,7 +84,6 @@ This package contains the library for %{name}base.
 %package -n	%{libgstcheck}
 Summary:	Library for GStreamer streaming-media framework
 Group:		System/Libraries
-Conflicts:	%{_lib}gstreamer1.0_0 < 1.0.5-1
 
 %description -n	%{libgstcheck}
 This package contains the library for %{name}check.
@@ -94,7 +91,6 @@ This package contains the library for %{name}check.
 %package -n	%{libgstcontroller}
 Summary:	Library for GStreamer streaming-media framework
 Group:		System/Libraries
-Conflicts:	%{_lib}gstreamer1.0_0 < 1.0.5-1
 
 %description -n	%{libgstcontroller}
 This package contains the library for %{name}controller.
@@ -102,7 +98,6 @@ This package contains the library for %{name}controller.
 %package -n	%{libgstnet}
 Summary:	Library for GStreamer streaming-media framework
 Group:		System/Libraries
-Conflicts:	%{_lib}gstreamer1.0_0 < 1.0.5-1
 
 %description -n	%{libgstnet}
 This package contains the library for %{name}net.
@@ -110,7 +105,6 @@ This package contains the library for %{name}net.
 %package -n	%{girname}
 Summary:	GObject Introspection interface libraries for %{name}
 Group:		System/Libraries
-Conflicts:	%{_lib}gstreamer1.0_0 < 1.0.5-1
 
 %description -n %{girname}
 GObject Introspection interface libraries for %{name}.
