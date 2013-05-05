@@ -16,7 +16,7 @@ Version: 	1.0.5
 Release: 	4
 License: 	LGPLv2+
 Group:		Sound
-URL:		http://gstreamer.freedesktop.org/
+Url:		http://gstreamer.freedesktop.org/
 Source0: 	ftp://ftp.gnome.org/pub/GNOME/sources/gstreamer/%{api}/%{name}-%{version}.tar.xz
 Patch0:		gstreamer-inspect-rpm-format.patch
 
@@ -29,11 +29,9 @@ BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gobject-introspection-1.0)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(popt)
-%ifnarch %{arm} %{mips}
-BuildRequires:	valgrind-devel
-%endif
 %ifarch %{ix86}
 BuildRequires:	nasm => 0.90
+BuildRequires:	pkgconfig(valgrind)
 %endif
 %if %{with docs}
 BuildRequires:	gtk-doc >= 0.7
