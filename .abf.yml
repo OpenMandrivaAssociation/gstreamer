@@ -2,3 +2,4 @@ removed_sources:
   gstreamer-1.0.5.tar.xz: 195fea857b103701495570a361128634ce6c02b4
 sources:
   gstreamer-1.0.8.tar.xz: 25daac109c4989f460c4d62475e63af941400a9a
+  gstreamer-1.0.9.tar.xz: a946f74d03e18dff53ecb064d89720b3f59fb5ea
