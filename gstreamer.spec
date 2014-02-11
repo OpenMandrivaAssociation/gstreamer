@@ -171,7 +171,7 @@ chrpath -d %{buildroot}{%{_bindir}/gst-{inspect,launch,typefind}-%{api},%{_libdi
 %{_bindir}/gst-launch-%{api}
 %{_bindir}/gst-typefind-%{api}
 %dir %{_libdir}/%{name}-%{api}
-%{_libdir}/%{name}-%{api}/gst-plugin-scanner
+%{_libexecdir}/%{name}-%{api}/gst-plugin-scanner
 %{_libdir}/%{name}-%{api}/libgstcoreelements.so
 %{_mandir}/man1/gst-inspect-%{api}.1*
 %{_mandir}/man1/gst-launch-%{api}.1*
