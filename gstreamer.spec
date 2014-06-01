@@ -128,14 +128,11 @@ applications and plugins for GStreamer.
 
 %build
 %configure2_5x \
-	--disable-static \
 	--enable-debug \
-	--disable-dependency-tracking \
 	--with-package-name='%{distribution} %{name} package' \
 	--with-package-origin='%{disturl}' \
 	--disable-tests \
 	--disable-examples \
-	--disable-rpath \
 %if %{with docs}
 	--enable-docbook \
 	--enable-gtk-doc \
