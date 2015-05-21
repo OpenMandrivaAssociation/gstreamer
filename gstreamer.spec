@@ -12,12 +12,12 @@
 
 Name:		gstreamer
 Summary: 	GStreamer Streaming-media framework runtime
-Version: 	1.2.3
+Version: 	1.4.5
 Release: 	1
 License: 	LGPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
-Source0: 	ftp://ftp.gnome.org/pub/GNOME/sources/gstreamer/%{api}/%{name}-%{version}.tar.xz
+Source0: 	ftp://ftp.gnome.org/pub/GNOME/sources/gstreamer/1.4/%{name}-%{version}.tar.xz
 Patch0:		gstreamer-inspect-rpm-format.patch
 
 BuildRequires:	bison
@@ -128,14 +128,11 @@ applications and plugins for GStreamer.
 
 %build
 %configure2_5x \
-	--disable-static \
 	--enable-debug \
-	--disable-dependency-tracking \
 	--with-package-name='%{distribution} %{name} package' \
 	--with-package-origin='%{disturl}' \
 	--disable-tests \
 	--disable-examples \
-	--disable-rpath \
 %if %{with docs}
 	--enable-docbook \
 	--enable-gtk-doc \
