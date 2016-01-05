@@ -12,12 +12,12 @@
 
 Name:		gstreamer
 Summary: 	GStreamer Streaming-media framework runtime
-Version: 	1.4.5
-Release: 	2
+Version: 	1.6.2
+Release: 	1
 License: 	LGPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
-Source0: 	ftp://ftp.gnome.org/pub/GNOME/sources/gstreamer/1.4/%{name}-%{version}.tar.xz
+Source0: 	http://ftp.gnome.org/pub/GNOME/sources/gstreamer/1.6/%{name}-%{version}.tar.xz
 Patch0:		gstreamer-inspect-rpm-format.patch
 
 BuildRequires:	bison
@@ -169,6 +169,9 @@ chrpath -d %{buildroot}{%{_bindir}/gst-{inspect,launch,typefind}-%{api},%{_libdi
 %{_bindir}/gst-typefind-%{api}
 %dir %{_libdir}/%{name}-%{api}
 %{_libexecdir}/%{name}-%{api}/gst-plugin-scanner
+%{_libexecdir}/%{name}-%{api}/gst-ptp-helper
+%{_datadir}/bash-completion/completions/*
+%{_datadir}/bash-completion/helpers/*
 %{_libdir}/%{name}-%{api}/libgstcoreelements.so
 %{_mandir}/man1/gst-inspect-%{api}.1*
 %{_mandir}/man1/gst-launch-%{api}.1*
@@ -210,6 +213,7 @@ chrpath -d %{buildroot}{%{_bindir}/gst-{inspect,launch,typefind}-%{api},%{_libdi
 %dir %{_includedir}/%{name}-%{api}/gst/controller/
 %{_includedir}/%{name}-%{api}/gst/controller/*.h
 %{_includedir}/%{name}-%{api}/gst/net/
+%{_libdir}/%{name}-%{api}/include/gst
 %{_libdir}/libgstbase-%{api}.so
 %{_libdir}/libgstcheck-%{api}.so
 %{_libdir}/libgstreamer-%{api}.so
