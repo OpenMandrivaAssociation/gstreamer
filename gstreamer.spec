@@ -1,18 +1,18 @@
-%bcond_with	docs
+%bcond_with docs
 
-%define major	0
-%define api	1.0
-%define libname		%mklibname %{name} %{api} %{major}
-%define libgstbase	%mklibname gstbase %{api} %{major}
-%define libgstcheck	%mklibname gstcheck %{api} %{major}
-%define libgstcontroller	%mklibname gstcontroller %{api} %{major}
-%define libgstnet	%mklibname gstnet %{api} %{major}
-%define girname	%mklibname gst-gir %{api}
-%define devname	%mklibname -d %{name}
+%define major 0
+%define api 1.0
+%define libname %mklibname %{name} %{api} %{major}
+%define libgstbase %mklibname gstbase %{api} %{major}
+%define libgstcheck %mklibname gstcheck %{api} %{major}
+%define libgstcontroller %mklibname gstcontroller %{api} %{major}
+%define libgstnet %mklibname gstnet %{api} %{major}
+%define girname %mklibname gst-gir %{api}
+%define devname %mklibname -d %{name}
 
 Name:		gstreamer
 Summary: 	GStreamer Streaming-media framework runtime
-Version: 	1.6.2
+Version: 	1.6.3
 Release: 	1
 License: 	LGPLv2+
 Group:		Sound
@@ -127,7 +127,7 @@ applications and plugins for GStreamer.
 %apply_patches
 
 %build
-%configure2_5x \
+%configure \
 	--enable-debug \
 	--with-package-name='%{distribution} %{name} package' \
 	--with-package-origin='%{disturl}' \
@@ -136,7 +136,7 @@ applications and plugins for GStreamer.
 %if %{with docs}
 	--enable-docbook \
 	--enable-gtk-doc \
-%else	
+%else
 	--disable-docbook \
 	--disable-gtk-doc \
 %endif
@@ -151,7 +151,7 @@ applications and plugins for GStreamer.
 #cd tests/check
 #make check
 
-%install  
+%install
 %makeinstall_std
 mkdir -p %{buildroot}%{_var}/cache/%{name}-%{api}
 
