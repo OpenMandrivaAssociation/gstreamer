@@ -12,12 +12,12 @@
 
 Name:		gstreamer
 Summary: 	GStreamer Streaming-media framework runtime
-Version: 	1.6.3
+Version: 	1.8.1
 Release: 	1
 License: 	LGPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
-Source0: 	http://ftp.gnome.org/pub/GNOME/sources/gstreamer/1.6/%{name}-%{version}.tar.xz
+Source0: 	http://ftp.gnome.org/pub/GNOME/sources/gstreamer/%(echo %{version}|cut -d. -f1-2)/%{name}-%{version}.tar.xz
 Patch0:		gstreamer-inspect-rpm-format.patch
 
 BuildRequires:	bison
@@ -166,6 +166,7 @@ chrpath -d %{buildroot}{%{_bindir}/gst-{inspect,launch,typefind}-%{api},%{_libdi
 %dir %{_var}/cache/%{name}-%{api}
 %{_bindir}/gst-inspect-%{api}
 %{_bindir}/gst-launch-%{api}
+%{_bindir}/gst-stats-%{api}
 %{_bindir}/gst-typefind-%{api}
 %dir %{_libdir}/%{name}-%{api}
 %{_libexecdir}/%{name}-%{api}/gst-plugin-scanner
@@ -173,6 +174,7 @@ chrpath -d %{buildroot}{%{_bindir}/gst-{inspect,launch,typefind}-%{api},%{_libdi
 %{_datadir}/bash-completion/completions/*
 %{_datadir}/bash-completion/helpers/*
 %{_libdir}/%{name}-%{api}/libgstcoreelements.so
+%{_libdir}/%{name}-%{api}/libgstcoretracers.so
 %{_mandir}/man1/gst-inspect-%{api}.1*
 %{_mandir}/man1/gst-launch-%{api}.1*
 %{_mandir}/man1/gst-typefind-%{api}.1*

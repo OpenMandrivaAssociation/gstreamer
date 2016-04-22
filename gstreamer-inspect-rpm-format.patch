@@ -1,7 +1,6 @@
-diff -urp gstreamer-0.11.94.orig/tools/gst-inspect.c gstreamer-0.11.94/tools/gst-inspect.c
---- gstreamer-0.11.94.orig/tools/gst-inspect.c	2012-09-01 18:02:10.000000000 -0400
-+++ gstreamer-0.11.94/tools/gst-inspect.c	2012-09-14 08:04:52.690369047 -0400
-@@ -1350,9 +1350,225 @@ print_element_info (GstElementFactory *
+--- gstreamer-1.8.1/tools/gst-inspect.c.0000~	2016-03-24 12:36:30.000000000 +0100
++++ gstreamer-1.8.1/tools/gst-inspect.c	2016-04-22 18:55:03.389780994 +0200
+@@ -1302,9 +1302,225 @@ print_element_info (GstElementFactory *
    return 0;
  }
  
@@ -228,7 +227,7 @@ diff -urp gstreamer-0.11.94.orig/tools/gst-inspect.c gstreamer-0.11.94/tools/gst
  {
    GstPadDirection direction;
    const gchar *type_name;
-@@ -1377,6 +1593,12 @@ print_plugin_automatic_install_info_code
+@@ -1330,6 +1546,12 @@ print_plugin_automatic_install_info_code
      return;
    }
  
@@ -241,7 +240,7 @@ diff -urp gstreamer-0.11.94.orig/tools/gst-inspect.c gstreamer-0.11.94/tools/gst
    /* decoder/demuxer sink pads should always be static and there should only
     * be one, the same applies to encoders/muxers and source pads */
    static_templates = gst_element_factory_get_static_pad_templates (factory);
-@@ -1413,15 +1635,20 @@ print_plugin_automatic_install_info_code
+@@ -1366,15 +1588,20 @@ print_plugin_automatic_install_info_code
      gst_structure_remove_field (s, "rate");
      gst_structure_remove_field (s, "depth");
      gst_structure_remove_field (s, "clock-rate");
@@ -266,7 +265,7 @@ diff -urp gstreamer-0.11.94.orig/tools/gst-inspect.c gstreamer-0.11.94/tools/gst
  {
    const gchar *const *protocols;
  
-@@ -1430,13 +1657,19 @@ print_plugin_automatic_install_info_prot
+@@ -1383,13 +1610,19 @@ print_plugin_automatic_install_info_prot
      switch (gst_element_factory_get_uri_type (factory)) {
        case GST_URI_SINK:
          while (*protocols != NULL) {
@@ -288,7 +287,7 @@ diff -urp gstreamer-0.11.94.orig/tools/gst-inspect.c gstreamer-0.11.94/tools/gst
            ++protocols;
          }
          break;
-@@ -1447,7 +1680,7 @@ print_plugin_automatic_install_info_prot
+@@ -1400,7 +1633,7 @@ print_plugin_automatic_install_info_prot
  }
  
  static void
@@ -297,7 +296,7 @@ diff -urp gstreamer-0.11.94.orig/tools/gst-inspect.c gstreamer-0.11.94/tools/gst
  {
    GList *features, *l;
  
-@@ -1466,11 +1699,15 @@ print_plugin_automatic_install_info (Gst
+@@ -1419,11 +1652,15 @@ print_plugin_automatic_install_info (Gst
      if (feature_plugin == plugin) {
        GstElementFactory *factory;
  
@@ -316,7 +315,7 @@ diff -urp gstreamer-0.11.94.orig/tools/gst-inspect.c gstreamer-0.11.94/tools/gst
      }
      if (feature_plugin)
        gst_object_unref (feature_plugin);
-@@ -1492,7 +1729,7 @@ print_all_plugin_automatic_install_info
+@@ -1445,7 +1682,7 @@ print_all_plugin_automatic_install_info
      plugin = (GstPlugin *) (plugins->data);
      plugins = g_list_next (plugins);
  
@@ -325,7 +324,7 @@ diff -urp gstreamer-0.11.94.orig/tools/gst-inspect.c gstreamer-0.11.94/tools/gst
    }
    gst_plugin_list_free (orig_plugins);
  }
-@@ -1504,6 +1741,7 @@ main (int argc, char *argv[])
+@@ -1457,6 +1694,7 @@ main (int argc, char *argv[])
    gboolean do_print_blacklist = FALSE;
    gboolean plugin_name = FALSE;
    gboolean print_aii = FALSE;
@@ -333,7 +332,7 @@ diff -urp gstreamer-0.11.94.orig/tools/gst-inspect.c gstreamer-0.11.94/tools/gst
    gboolean uri_handlers = FALSE;
    gboolean check_exists = FALSE;
    gchar *min_version = NULL;
-@@ -1521,6 +1759,9 @@ main (int argc, char *argv[])
+@@ -1474,6 +1712,9 @@ main (int argc, char *argv[])
                "or all plugins provide.\n                                       "
                "Useful in connection with external automatic plugin "
                "installation mechanisms"), NULL},
@@ -343,7 +342,7 @@ diff -urp gstreamer-0.11.94.orig/tools/gst-inspect.c gstreamer-0.11.94/tools/gst
      {"plugin", '\0', 0, G_OPTION_ARG_NONE, &plugin_name,
          N_("List the plugin contents"), NULL},
      {"exists", '\0', 0, G_OPTION_ARG_NONE, &check_exists,
-@@ -1650,7 +1891,7 @@ main (int argc, char *argv[])
+@@ -1610,7 +1851,7 @@ main (int argc, char *argv[])
        /* if there is such a plugin, print out info */
        if (plugin) {
          if (print_aii) {
@@ -352,7 +351,7 @@ diff -urp gstreamer-0.11.94.orig/tools/gst-inspect.c gstreamer-0.11.94/tools/gst
          } else {
            print_plugin_info (plugin);
            print_plugin_features (plugin);
-@@ -1663,13 +1904,17 @@ main (int argc, char *argv[])
+@@ -1623,7 +1864,7 @@ main (int argc, char *argv[])
  
            if (plugin) {
              if (print_aii) {
@@ -361,14 +360,3 @@ diff -urp gstreamer-0.11.94.orig/tools/gst-inspect.c gstreamer-0.11.94/tools/gst
              } else {
                print_plugin_info (plugin);
                print_plugin_features (plugin);
-             }
-           } else {
--            g_printerr (_("Could not load plugin file: %s\n"), error->message);
-+            if (!print_aii_rpm)
-+              g_print (_("Could not load plugin file: %s\n"), error->message);
-+            else
-+              g_printerr (_("Could not load plugin file: %s\n"),
-+                  error->message);
-             g_error_free (error);
-             return -1;
-           }
