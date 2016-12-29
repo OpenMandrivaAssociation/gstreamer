@@ -12,7 +12,7 @@
 
 Name:		gstreamer
 Summary: 	GStreamer Streaming-media framework runtime
-Version: 	1.8.1
+Version: 	1.10.2
 Release: 	1
 License: 	LGPLv2+
 Group:		Sound
@@ -215,7 +215,6 @@ chrpath -d %{buildroot}{%{_bindir}/gst-{inspect,launch,typefind}-%{api},%{_libdi
 %dir %{_includedir}/%{name}-%{api}/gst/controller/
 %{_includedir}/%{name}-%{api}/gst/controller/*.h
 %{_includedir}/%{name}-%{api}/gst/net/
-%{_libdir}/%{name}-%{api}/include/gst
 %{_libdir}/libgstbase-%{api}.so
 %{_libdir}/libgstcheck-%{api}.so
 %{_libdir}/libgstreamer-%{api}.so
