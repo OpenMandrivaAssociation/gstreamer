@@ -13,7 +13,7 @@
 Name:		gstreamer
 Summary: 	GStreamer Streaming-media framework runtime
 Version: 	1.10.2
-Release: 	1
+Release: 	2
 License: 	LGPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
@@ -29,6 +29,8 @@ BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gobject-introspection-1.0)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(popt)
+BuildRequires:	pkgconfig(libcap)
+BuildRequires:	libcap-utils
 %ifarch %{ix86}
 BuildRequires:	nasm => 0.90
 BuildRequires:	pkgconfig(valgrind)
@@ -41,6 +43,7 @@ BuildRequires:	docbook-dtd412-xml
 BuildRequires:	ghostscript
 BuildRequires:	python-pyxml
 %endif
+Requires(post):	libcap-utils
 
 %description
 GStreamer is a streaming-media framework, based on graphs of filters which
@@ -161,6 +164,9 @@ mkdir -p %{buildroot}%{_var}/cache/%{name}-%{api}
 chrpath -d %{buildroot}{%{_bindir}/gst-{inspect,launch,typefind}-%{api},%{_libdir}/{*.so,%{name}-%{api}/*.so}}
 #,xmlinspect,xmllaunch
 
+%post
+%{_sbindir}/setcap cap_net_bind_service,cap_net_admin+ep %{_libexecdir}/%{name}-%{api}/gst-ptp-helper
+
 %files tools -f %{name}-%{api}.lang
 %doc AUTHORS COPYING README NEWS
 %dir %{_var}/cache/%{name}-%{api}
@@ -202,7 +208,6 @@ chrpath -d %{buildroot}{%{_bindir}/gst-{inspect,launch,typefind}-%{api},%{_libdi
 %{_libdir}/girepository-1.0/GstNet-%{api}.typelib
 
 %files -n %{devname}
-%doc ChangeLog
 %if %{with docs}
 %doc %{_datadir}/doc/%{name}-%{api}
 %endif
