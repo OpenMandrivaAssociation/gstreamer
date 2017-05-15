@@ -12,8 +12,8 @@
 
 Name:		gstreamer
 Summary: 	GStreamer Streaming-media framework runtime
-Version: 	1.10.2
-Release: 	2
+Version: 	1.12.0
+Release: 	1
 License: 	LGPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
@@ -50,7 +50,7 @@ GStreamer is a streaming-media framework, based on graphs of filters which
 operate on media data. Applications using this library can do anything
 from real-time sound processing to playing videos, and just about anything
 else media-related.  Its plugin-based architecture means that new data
-types or processing capabilities can be added simply by installing new 
+types or processing capabilities can be added simply by installing new
 plugins.
 
 %package	tools
@@ -63,7 +63,7 @@ GStreamer is a streaming-media framework, based on graphs of filters which
 operate on media data. Applications using this library can do anything
 from real-time sound processing to playing videos, and just about anything
 else media-related.  Its plugin-based architecture means that new data
-types or processing capabilities can be added simply by installing new 
+types or processing capabilities can be added simply by installing new
 plugins.
 
 %package -n	%{libname}
@@ -177,6 +177,7 @@ chrpath -d %{buildroot}{%{_bindir}/gst-{inspect,launch,typefind}-%{api},%{_libdi
 %dir %{_libdir}/%{name}-%{api}
 %{_libexecdir}/%{name}-%{api}/gst-plugin-scanner
 %{_libexecdir}/%{name}-%{api}/gst-ptp-helper
+%{_libexecdir}/%{name}-%{api}/gst-completion-helper
 %{_datadir}/bash-completion/completions/*
 %{_datadir}/bash-completion/helpers/*
 %{_libdir}/%{name}-%{api}/libgstcoreelements.so
