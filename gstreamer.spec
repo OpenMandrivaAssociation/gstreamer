@@ -12,7 +12,7 @@
 
 Name:		gstreamer
 Summary: 	GStreamer Streaming-media framework runtime
-Version: 	1.12.0
+Version: 	1.12.1
 Release: 	1
 License: 	LGPLv2+
 Group:		Sound
@@ -184,6 +184,7 @@ chrpath -d %{buildroot}{%{_bindir}/gst-{inspect,launch,typefind}-%{api},%{_libdi
 %{_libdir}/%{name}-%{api}/libgstcoretracers.so
 %{_mandir}/man1/gst-inspect-%{api}.1*
 %{_mandir}/man1/gst-launch-%{api}.1*
+%{_mandir}/man1/gst-stats-%{api}.1*
 %{_mandir}/man1/gst-typefind-%{api}.1*
 
 %files -n %{libname}
