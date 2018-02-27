@@ -1,32 +1,33 @@
 #!/bin/sh
 #
-# Script to install in:
-# /usr/lib/rpm/redhat/find-provides.d
-#
 # Transform GStreamer auto install info into RPM provides
 #
 # Author: Bastien Nocera <hadess@hadess.net>
 # Based on other provides scripts from RPM
-#
+# Adapted to OpenMandriva (+ added various fixes)
+# by Bernhard Rosenkränzer <bero@lindev.ch>
 
 filelist=`grep -e '.so$' | sed "s/['\"]/\\\&/g"`
+provides=0
 
 # --- Alpha does not mark 64bit dependencies•
 case `uname -m` in
-  alpha*)	mark64="" ;;
-  *)		mark64="()(64bit)" ;;
+alpha*)
+	mark64="" ;;
+*)	
+	mark64="()(64bit)" ;;
 esac
 
 solist=$(echo $filelist | grep "libgst" | \
 	xargs file -L 2>/dev/null | grep "ELF.*shared object" | cut -d: -f1 )
 
-function getmark()
+getmark()
 {
 	lib64=`if file -L $1 2>/dev/null | \
 		grep "ELF 64-bit" >/dev/null; then echo -n "$mark64"; fi`
 }
 
-function libdir()
+libdir()
 {
 	buildlibdir=`dirname $1`
 	buildlibdir=`dirname $buildlibdir`
@@ -35,10 +36,12 @@ function libdir()
 for so in $solist ; do
 	getmark $so
 	libdir $so
-	LD_LIBRARY_PATH=$buildlibdir gst-inspect-0.10 --print-plugin-auto-install-info --rpm $so 2> /dev/null | while read line ; do
-		echo -n "$line";
-		echo -n "$lib64"
-		echo
+	for i in /usr/bin/gst-inspect-[0-9]*; do
+		LD_LIBRARY_PATH=$buildlibdir $i --print-plugin-auto-install-info --rpm $so 2> /dev/null | while read line ; do
+			echo -n "$line";
+			echo -n "$lib64"
+			echo
+		done
 	done
 done
-
+exit 0

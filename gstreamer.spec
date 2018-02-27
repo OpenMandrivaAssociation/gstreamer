@@ -13,11 +13,14 @@
 Name:		gstreamer
 Summary: 	GStreamer Streaming-media framework runtime
 Version: 	1.13.1
-Release: 	1
+Release: 	2
 License: 	LGPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
 Source0: 	https://gstreamer.freedesktop.org/src/%{name}/%{name}-%{version}.tar.xz
+# RPM Provides: generator
+Source10:	gstreamer.attr
+Source11:	gstreamer.prov
 Patch0:		gstreamer-inspect-rpm-format.patch
 
 BuildRequires:	bison
@@ -120,6 +123,8 @@ Requires:	%{libgstnet} = %{version}-%{release}
 Requires:	%{girname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 Provides:	%{name}%{api}-devel = %{version}-%{release}
+# For gst-inspect, used by rpm dependency generator
+Requires:	%{name}-tools = %{EVRD}
 
 %description -n %{devname}
 This package contains the libraries and includes files necessary to develop
@@ -163,6 +168,10 @@ mkdir -p %{buildroot}%{_var}/cache/%{name}-%{api}
 #gw really remove rpath for rpmlint
 chrpath -d %{buildroot}{%{_bindir}/gst-{inspect,launch,typefind}-%{api},%{_libdir}/{*.so,%{name}-%{api}/*.so}}
 #,xmlinspect,xmllaunch
+
+# RPM dependency generator
+install -m644 %{S:10} -D %{buildroot}%{_rpmconfigdir}/fileattrs/%{name}.attr
+install -m755 %{S:11} -D %{buildroot}%{_rpmconfigdir}/%{name}.prov
 
 %post
 %{_sbindir}/setcap cap_net_bind_service,cap_net_admin+ep %{_libexecdir}/%{name}-%{api}/gst-ptp-helper
@@ -241,4 +250,5 @@ chrpath -d %{buildroot}{%{_bindir}/gst-{inspect,launch,typefind}-%{api},%{_libdi
 %{_datadir}/gir-1.0/GstCheck-%{api}.gir
 %{_datadir}/gir-1.0/GstController-%{api}.gir
 %{_datadir}/gir-1.0/GstNet-%{api}.gir
-
+%{_rpmconfigdir}/fileattrs/%{name}.attr
+%{_rpmconfigdir}/%{name}.prov
