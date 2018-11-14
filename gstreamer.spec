@@ -13,7 +13,7 @@
 Name:		gstreamer
 Summary: 	GStreamer Streaming-media framework runtime
 Version: 	1.14.4
-Release: 	2
+Release: 	3
 License: 	LGPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
@@ -34,6 +34,9 @@ BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(popt)
 BuildRequires:	pkgconfig(libcap)
 BuildRequires:	libcap-utils
+BuildRequires:	pkgconfig(valgrind)
+BuildRequires:	pkgconfig(libunwind)
+BuildRequires:	pkgconfig(libdw)
 %ifarch %{ix86}
 BuildRequires:	nasm => 0.90
 BuildRequires:	pkgconfig(valgrind)
@@ -131,8 +134,7 @@ This package contains the libraries and includes files necessary to develop
 applications and plugins for GStreamer.
 
 %prep
-%setup -q
-%apply_patches
+%autosetup -p1
 
 %build
 %configure \
@@ -153,14 +155,14 @@ applications and plugins for GStreamer.
 %endif
 	--with-html-dir=%{_datadir}/gtk-doc/html
 
-%make
+%make_build
 
 %check
 #cd tests/check
 #make check
 
 %install
-%makeinstall_std
+%make_install
 mkdir -p %{buildroot}%{_var}/cache/%{name}-%{api}
 
 %find_lang %{name}-%{api}
