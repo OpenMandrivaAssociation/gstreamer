@@ -12,8 +12,8 @@
 
 Name:		gstreamer
 Summary: 	GStreamer Streaming-media framework runtime
-Version: 	1.15.1
-Release: 	1
+Version: 	1.14.4
+Release: 	3
 License: 	LGPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
@@ -254,7 +254,3 @@ install -m755 %{S:11} -D %{buildroot}%{_rpmconfigdir}/%{name}.prov
 %{_datadir}/gir-1.0/GstNet-%{api}.gir
 %{_rpmconfigdir}/fileattrs/%{name}.attr
 %{_rpmconfigdir}/%{name}.prov
-
-%dir %{_datadir}/gstreamer-%{api}/gdb/
-%{_datadir}/gstreamer-%{api}/gdb/
-%{_datadir}/gdb/auto-load/
