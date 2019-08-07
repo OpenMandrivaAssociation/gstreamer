@@ -34,9 +34,10 @@ BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(popt)
 BuildRequires:	pkgconfig(libcap)
 BuildRequires:	libcap-utils
+%ifnarch %{riscv}
 BuildRequires:	pkgconfig(valgrind)
-# need only for debuginfo
-#BuildRequires:	pkgconfig(libunwind)
+BuildRequires:	pkgconfig(libunwind)
+%endif
 BuildRequires:	pkgconfig(libdw)
 %ifarch %{ix86}
 BuildRequires:	nasm => 0.90
