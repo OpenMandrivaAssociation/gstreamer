@@ -35,7 +35,8 @@ BuildRequires:	pkgconfig(popt)
 BuildRequires:	pkgconfig(libcap)
 BuildRequires:	libcap-utils
 BuildRequires:	pkgconfig(valgrind)
-BuildRequires:	pkgconfig(libunwind)
+# need only for debuginfo
+#BuildRequires:	pkgconfig(libunwind)
 BuildRequires:	pkgconfig(libdw)
 %ifarch %{ix86}
 BuildRequires:	nasm => 0.90
