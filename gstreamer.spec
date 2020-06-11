@@ -1,3 +1,8 @@
+# gstreamer is used by wine
+%ifarch %{x86_64}
+%bcond_without compat32
+%endif
+
 %bcond_with docs
 
 %define major 0
@@ -9,11 +14,17 @@
 %define libgstnet %mklibname gstnet %{api} %{major}
 %define girname %mklibname gst-gir %{api}
 %define devname %mklibname -d %{name}
+%define lib32name %mklib32name %{name} %{api} %{major}
+%define lib32gstbase %mklib32name gstbase %{api} %{major}
+%define lib32gstcheck %mklib32name gstcheck %{api} %{major}
+%define lib32gstcontroller %mklib32name gstcontroller %{api} %{major}
+%define lib32gstnet %mklib32name gstnet %{api} %{major}
+%define dev32name %mklib32name -d %{name}
 
 Name:		gstreamer
 Summary: 	GStreamer Streaming-media framework runtime
 Version: 	1.16.2
-Release: 	2
+Release: 	3
 License: 	LGPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
@@ -36,7 +47,6 @@ BuildRequires:	pkgconfig(libcap)
 BuildRequires:	libcap-utils
 %ifnarch %{riscv}
 BuildRequires:	pkgconfig(valgrind)
-BuildRequires:	pkgconfig(libunwind)
 %endif
 BuildRequires:	pkgconfig(libdw)
 %ifarch %{ix86}
@@ -49,9 +59,24 @@ BuildRequires:	transfig
 BuildRequires:	docbook-dtd42-xml
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	ghostscript
-BuildRequires:	python-pyxml
 %endif
 Requires(post):	libcap-utils
+%if %{with compat32}
+BuildRequires:	devel(libglib-2.0)
+BuildRequires:	devel(libgobject-2.0)
+BuildRequires:	devel(libgio-2.0)
+BuildRequires:	devel(libmount)
+BuildRequires:	devel(libblkid)
+BuildRequires:	devel(libpcre)
+BuildRequires:	devel(libz)
+BuildRequires:	devel(libffi)
+BuildRequires:	devel(libxml2)
+BuildRequires:	devel(libpopt)
+BuildRequires:	devel(libcap)
+BuildRequires:	devel(libdw)
+BuildRequires:	devel(libelf)
+BuildRequires:	devel(libunwind)
+%endif
 
 %description
 GStreamer is a streaming-media framework, based on graphs of filters which
@@ -135,10 +160,76 @@ Requires:	%{name}-tools = %{EVRD}
 This package contains the libraries and includes files necessary to develop
 applications and plugins for GStreamer.
 
+%if %{with compat32}
+%package -n	%{lib32name}
+Summary:	Library for GStreamer streaming-media framework (32-bit)
+Group:		System/Libraries
+
+%description -n	%{lib32name}
+This package contains the library for %{name}.
+
+%package -n	%{lib32gstbase}
+Summary:	Library for GStreamer streaming-media framework (32-bit)
+Group:		System/Libraries
+
+%description -n	%{lib32gstbase}
+This package contains the library for %{name}base.
+
+%package -n	%{lib32gstcheck}
+Summary:	Library for GStreamer streaming-media framework (32-bit)
+Group:		System/Libraries
+
+%description -n	%{lib32gstcheck}
+This package contains the library for %{name}check.
+
+%package -n	%{lib32gstcontroller}
+Summary:	Library for GStreamer streaming-media framework (32-bit)
+Group:		System/Libraries
+
+%description -n	%{lib32gstcontroller}
+This package contains the library for %{name}controller.
+
+%package -n	%{lib32gstnet}
+Summary:	Library for GStreamer streaming-media framework (32-bit)
+Group:		System/Libraries
+
+%description -n	%{lib32gstnet}
+This package contains the library for %{name}net.
+
+%package -n	%{dev32name}
+Summary:	Libraries and include files for GStreamer streaming-media framework (32-bit)
+Group:		Development/C
+Requires:	%{lib32name} = %{version}-%{release}
+Requires:	%{lib32gstbase} = %{version}-%{release}
+Requires:	%{lib32gstcheck} = %{version}-%{release}
+Requires:	%{lib32gstcontroller} = %{version}-%{release}
+Requires:	%{lib32gstnet} = %{version}-%{release}
+
+%description -n %{dev32name}
+This package contains the libraries and includes files necessary to develop
+applications and plugins for GStreamer.
+%endif
+
 %prep
 %autosetup -p1
+export CONFIGURE_TOP="$(pwd)"
+%if %{with compat32}
+mkdir build32
+cd build32
+%configure32 \
+	--with-package-name='%{distribution} %{name} 32-bit package' \
+	--with-package-origin='%{disturl}' \
+	--disable-tests \
+	--disable-examples \
+	--disable-docbook \
+	--disable-gtk-doc \
+	--disable-valgrind
+cat config.log >&2
+cd ..
+%endif
 
-%build
+mkdir build
+cd build
 %configure \
 	--enable-debug \
 	--with-package-name='%{distribution} %{name} package' \
@@ -157,14 +248,34 @@ applications and plugins for GStreamer.
 %endif
 	--with-html-dir=%{_datadir}/gtk-doc/html
 
-%make_build
+%build
+%if %{with compat32}
+if %make_build -C build32; then
+	echo "Looks like glib-mkenums is fixed - remove the workaround"
+	exit 1
+else
+	sed -i -e 's,^\\#,#,g' build32/libs/gst/controller/controller-enumtypes.c
+	%make_build -C build32
+fi
+%endif
+
+if %make_build -C build; then
+	echo "Looks like glib-mkenums is fixed - remove the workaround"
+	exit 1
+else
+	sed -i -e 's,^\\#,#,g' build/libs/gst/controller/controller-enumtypes.c
+	%make_build -C build
+fi
 
 %check
 #cd tests/check
 #make check
 
 %install
-%make_install
+%if %{with compat32}
+%make_install -C build32
+%endif
+%make_install -C build
 mkdir -p %{buildroot}%{_var}/cache/%{name}-%{api}
 
 %find_lang %{name}-%{api}
@@ -223,9 +334,6 @@ install -m755 %{S:11} -D %{buildroot}%{_rpmconfigdir}/%{name}.prov
 %{_libdir}/girepository-1.0/GstNet-%{api}.typelib
 
 %files -n %{devname}
-%if %{with docs}
-%doc %{_datadir}/doc/%{name}-%{api}
-%endif
 %dir %{_includedir}/%{name}-%{api}
 %dir %{_includedir}/%{name}-%{api}/gst
 %{_includedir}/%{name}-%{api}/gst/*.h
@@ -246,9 +354,11 @@ install -m755 %{S:11} -D %{buildroot}%{_rpmconfigdir}/%{name}.prov
 %{_libdir}/pkgconfig/gstreamer-net-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-controller-%{api}.pc
 %{_datadir}/aclocal/gst-element-check-%{api}.m4
+%if %{with docs}
 %{_datadir}/gtk-doc/html/%{name}-%{api}/
 %{_datadir}/gtk-doc/html/%{name}-libs-%{api}/
 %{_datadir}/gtk-doc/html/%{name}-plugins-%{api}
+%endif
 %{_datadir}/gir-1.0/Gst-%{api}.gir
 %{_datadir}/gir-1.0/GstBase-%{api}.gir
 %{_datadir}/gir-1.0/GstCheck-%{api}.gir
@@ -257,5 +367,37 @@ install -m755 %{S:11} -D %{buildroot}%{_rpmconfigdir}/%{name}.prov
 %{_rpmconfigdir}/fileattrs/%{name}.attr
 %{_rpmconfigdir}/%{name}.prov
 %{_datadir}/gdb/auto-load/%{_libdir}/*.py
-%{_datadir}/gdb/auto-load/%{_libdir}/__pycache__/*
 %{_datadir}/%{name}-%{api}/gdb
+
+%if %{with compat32}
+%files -n %{lib32name}
+%{_prefix}/lib/libgstreamer-%{api}.so.%{major}*
+%dir %{_prefix}/lib/%{name}-%{api}
+%{_prefix}/lib/%{name}-%{api}/libgstcoreelements.so
+%{_prefix}/lib/%{name}-%{api}/libgstcoretracers.so
+
+%files -n %{lib32gstbase}
+%{_prefix}/lib/libgstbase-%{api}.so.%{major}*
+
+%files -n %{lib32gstcheck}
+%{_prefix}/lib/libgstcheck-%{api}.so.%{major}*
+
+%files -n %{lib32gstcontroller}
+%{_prefix}/lib/libgstcontroller-%{api}.so.%{major}*
+
+%files -n %{lib32gstnet}
+%{_prefix}/lib/libgstnet-%{api}.so.%{major}*
+
+%files -n %{dev32name}
+%{_prefix}/lib/libgstbase-%{api}.so
+%{_prefix}/lib/libgstcheck-%{api}.so
+%{_prefix}/lib/libgstreamer-%{api}.so
+%{_prefix}/lib/libgstnet-%{api}.so
+%{_prefix}/lib/libgstcontroller-%{api}.so
+%{_prefix}/lib/pkgconfig/gstreamer-%{api}.pc
+%{_prefix}/lib/pkgconfig/gstreamer-base-%{api}.pc
+%{_prefix}/lib/pkgconfig/gstreamer-check-%{api}.pc
+%{_prefix}/lib/pkgconfig/gstreamer-net-%{api}.pc
+%{_prefix}/lib/pkgconfig/gstreamer-controller-%{api}.pc
+%{_datadir}/gdb/auto-load/%{_prefix}/lib/*.py
+%endif
