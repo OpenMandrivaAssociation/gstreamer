@@ -23,8 +23,8 @@
 
 Name:		gstreamer
 Summary: 	GStreamer Streaming-media framework runtime
-Version: 	1.16.2
-Release: 	3
+Version: 	1.18.0
+Release: 	1
 License: 	LGPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
@@ -34,6 +34,7 @@ Source10:	gstreamer.attr
 Source11:	gstreamer.prov
 Patch0:		gstreamer-inspect-rpm-format.patch
 
+BuildRequires:	meson
 BuildRequires:	bison
 BuildRequires:	chrpath
 BuildRequires:	flex
@@ -75,7 +76,7 @@ BuildRequires:	devel(libpopt)
 BuildRequires:	devel(libcap)
 BuildRequires:	devel(libdw)
 BuildRequires:	devel(libelf)
-BuildRequires:	devel(libunwind)
+BuildRequires:	libunwind-nongnu-devel
 %endif
 
 %description
@@ -212,70 +213,43 @@ applications and plugins for GStreamer.
 
 %prep
 %autosetup -p1
-export CONFIGURE_TOP="$(pwd)"
 %if %{with compat32}
-mkdir build32
-cd build32
-%configure32 \
-	--with-package-name='%{distribution} %{name} 32-bit package' \
-	--with-package-origin='%{disturl}' \
-	--disable-tests \
-	--disable-examples \
-	--disable-docbook \
-	--disable-gtk-doc \
-	--disable-valgrind
-cat config.log >&2
-cd ..
+%meson32 \
+	-Dpackage-name='%{distribution} %{name} 32-bit package' \
+	-Dpackage-origin='%{disturl}' \
+	-Dtests=disabled \
+	-Dexamples=disabled \
+	-Ddbghelp=disabled \
+	-Dintrospection=disabled \
+	-Dgtk-doc=disabled \
+	-Ddoc=disabled
 %endif
 
-mkdir build
-cd build
-%configure \
-	--enable-debug \
-	--with-package-name='%{distribution} %{name} package' \
-	--with-package-origin='%{disturl}' \
-	--disable-tests \
-	--disable-examples \
+%meson \
+	-Dpackage-name='%{distribution} %{name} package' \
+	-Dpackage-origin='%{disturl}' \
+	-Dtests=disabled \
+	-Dexamples=disabled \
+	-Ddbghelp=disabled \
 %if %{with docs}
-	--enable-docbook \
-	--enable-gtk-doc \
+	-Dgtk-doc=enabled \
 %else
-	--disable-docbook \
-	--disable-gtk-doc \
+	-Dgtk-doc=disabled \
 %endif
-%ifarch %{mips}
-	--disable-valgrind \
-%endif
-	--with-html-dir=%{_datadir}/gtk-doc/html
+	-Ddoc=disabled
 
 %build
 %if %{with compat32}
-if %make_build -C build32; then
-	echo "Looks like glib-mkenums is fixed - remove the workaround"
-	exit 1
-else
-	sed -i -e 's,^\\#,#,g' build32/libs/gst/controller/controller-enumtypes.c
-	%make_build -C build32
-fi
+%ninja_build -C build32
 %endif
 
-if %make_build -C build; then
-	echo "Looks like glib-mkenums is fixed - remove the workaround"
-	exit 1
-else
-	sed -i -e 's,^\\#,#,g' build/libs/gst/controller/controller-enumtypes.c
-	%make_build -C build
-fi
-
-%check
-#cd tests/check
-#make check
+%ninja_build -C build
 
 %install
 %if %{with compat32}
-%make_install -C build32
+%ninja_install -C build32
 %endif
-%make_install -C build
+%ninja_install -C build
 mkdir -p %{buildroot}%{_var}/cache/%{name}-%{api}
 
 %find_lang %{name}-%{api}
@@ -302,6 +276,8 @@ install -m755 %{S:11} -D %{buildroot}%{_rpmconfigdir}/%{name}.prov
 %{_libexecdir}/%{name}-%{api}/gst-plugin-scanner
 %{_libexecdir}/%{name}-%{api}/gst-ptp-helper
 %{_libexecdir}/%{name}-%{api}/gst-completion-helper
+%{_libexecdir}/%{name}-%{api}/gst-hotdoc-plugins-scanner
+%{_libexecdir}/%{name}-%{api}/gst-plugins-doc-cache-generator
 %{_datadir}/bash-completion/completions/*
 %{_datadir}/bash-completion/helpers/*
 %{_libdir}/%{name}-%{api}/libgstcoreelements.so
