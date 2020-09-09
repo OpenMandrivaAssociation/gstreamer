@@ -45,7 +45,9 @@ BuildRequires:	pkgconfig(gobject-introspection-1.0)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(popt)
 BuildRequires:	pkgconfig(libcap)
+BuildRequires:	pkgconfig(bash-completion)
 BuildRequires:	libcap-utils
+BuildRequires:	cmake
 %ifnarch %{riscv}
 BuildRequires:	pkgconfig(valgrind)
 %endif
