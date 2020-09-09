@@ -75,6 +75,7 @@ BuildRequires:	devel(libxml2)
 BuildRequires:	devel(libpopt)
 BuildRequires:	devel(libcap)
 BuildRequires:	devel(libdw)
+BuildRequires:	devel(liblzma)
 BuildRequires:	devel(libelf)
 BuildRequires:	libunwind-nongnu-devel
 %endif
