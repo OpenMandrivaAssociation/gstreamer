@@ -26,7 +26,7 @@
 Name:		gstreamer
 Summary:	GStreamer Streaming-media framework runtime
 Version:	1.18.4
-Release:	2
+Release:	3
 License:	LGPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
@@ -49,6 +49,8 @@ BuildRequires:	pkgconfig(popt)
 BuildRequires:	pkgconfig(libcap)
 BuildRequires:	pkgconfig(libunwind)
 BuildRequires:	pkgconfig(bash-completion)
+BuildRequires:	pkgconfig(gmp)
+BuildRequires:	pkgconfig(gsl)
 BuildRequires:	libcap-utils
 BuildRequires:	cmake
 %ifnarch %{riscv}
