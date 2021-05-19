@@ -1,3 +1,5 @@
+%global optflags %{optflags} -O3
+
 # gstreamer is used by wine
 %ifarch %{x86_64}
 %bcond_without compat32
@@ -22,10 +24,10 @@
 %define dev32name %mklib32name -d %{name}
 
 Name:		gstreamer
-Summary: 	GStreamer Streaming-media framework runtime
-Version: 	1.18.4
-Release: 	1
-License: 	LGPLv2+
+Summary:	GStreamer Streaming-media framework runtime
+Version:	1.18.4
+Release:	2
+License:	LGPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
 Source0: 	https://gstreamer.freedesktop.org/src/%{name}/%{name}-%{version}.tar.xz
@@ -91,12 +93,13 @@ else media-related.  Its plugin-based architecture means that new data
 types or processing capabilities can be added simply by installing new
 plugins.
 
-%package	tools
+%package tools
 Summary:	GStreamer Streaming-media framework runtime
 Group:		Sound
+Requires(post):	libcap-utils
 %rename		gstreamer1.0-tools
 
-%description	tools
+%description tools
 GStreamer is a streaming-media framework, based on graphs of filters which
 operate on media data. Applications using this library can do anything
 from real-time sound processing to playing videos, and just about anything
@@ -104,50 +107,50 @@ else media-related.  Its plugin-based architecture means that new data
 types or processing capabilities can be added simply by installing new
 plugins.
 
-%package -n	%{libname}
+%package -n %{libname}
 Summary:	Library for GStreamer streaming-media framework
 Group:		System/Libraries
 Provides:	libgstreamer%{api} = %{version}-%{release}
 
-%description -n	%{libname}
+%description -n %{libname}
 This package contains the library for %{name}.
 
-%package -n	%{libgstbase}
+%package -n %{libgstbase}
 Summary:	Library for GStreamer streaming-media framework
 Group:		System/Libraries
 
-%description -n	%{libgstbase}
+%description -n %{libgstbase}
 This package contains the library for %{name}base.
 
-%package -n	%{libgstcheck}
+%package -n %{libgstcheck}
 Summary:	Library for GStreamer streaming-media framework
 Group:		System/Libraries
 
-%description -n	%{libgstcheck}
+%description -n %{libgstcheck}
 This package contains the library for %{name}check.
 
-%package -n	%{libgstcontroller}
+%package -n %{libgstcontroller}
 Summary:	Library for GStreamer streaming-media framework
 Group:		System/Libraries
 
-%description -n	%{libgstcontroller}
+%description -n %{libgstcontroller}
 This package contains the library for %{name}controller.
 
-%package -n	%{libgstnet}
+%package -n %{libgstnet}
 Summary:	Library for GStreamer streaming-media framework
 Group:		System/Libraries
 
-%description -n	%{libgstnet}
+%description -n %{libgstnet}
 This package contains the library for %{name}net.
 
-%package -n	%{girname}
+%package -n %{girname}
 Summary:	GObject Introspection interface libraries for %{name}
 Group:		System/Libraries
 
 %description -n %{girname}
 GObject Introspection interface libraries for %{name}.
 
-%package -n	%{devname}
+%package -n %{devname}
 Summary:	Libraries and include files for GStreamer streaming-media framework
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
@@ -166,42 +169,42 @@ This package contains the libraries and includes files necessary to develop
 applications and plugins for GStreamer.
 
 %if %{with compat32}
-%package -n	%{lib32name}
+%package -n %{lib32name}
 Summary:	Library for GStreamer streaming-media framework (32-bit)
 Group:		System/Libraries
 
-%description -n	%{lib32name}
+%description -n %{lib32name}
 This package contains the library for %{name}.
 
-%package -n	%{lib32gstbase}
+%package -n %{lib32gstbase}
 Summary:	Library for GStreamer streaming-media framework (32-bit)
 Group:		System/Libraries
 
-%description -n	%{lib32gstbase}
+%description -n %{lib32gstbase}
 This package contains the library for %{name}base.
 
-%package -n	%{lib32gstcheck}
+%package -n %{lib32gstcheck}
 Summary:	Library for GStreamer streaming-media framework (32-bit)
 Group:		System/Libraries
 
-%description -n	%{lib32gstcheck}
+%description -n %{lib32gstcheck}
 This package contains the library for %{name}check.
 
-%package -n	%{lib32gstcontroller}
+%package -n %{lib32gstcontroller}
 Summary:	Library for GStreamer streaming-media framework (32-bit)
 Group:		System/Libraries
 
-%description -n	%{lib32gstcontroller}
+%description -n %{lib32gstcontroller}
 This package contains the library for %{name}controller.
 
-%package -n	%{lib32gstnet}
+%package -n %{lib32gstnet}
 Summary:	Library for GStreamer streaming-media framework (32-bit)
 Group:		System/Libraries
 
-%description -n	%{lib32gstnet}
+%description -n %{lib32gstnet}
 This package contains the library for %{name}net.
 
-%package -n	%{dev32name}
+%package -n %{dev32name}
 Summary:	Libraries and include files for GStreamer streaming-media framework (32-bit)
 Group:		Development/C
 Requires:	%{lib32name} = %{version}-%{release}
