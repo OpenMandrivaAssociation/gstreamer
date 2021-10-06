@@ -68,7 +68,6 @@ BuildRequires:	docbook-dtd42-xml
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	ghostscript
 %endif
-Requires(post):	libcap-utils
 %if %{with compat32}
 BuildRequires:	devel(libglib-2.0)
 BuildRequires:	devel(libgobject-2.0)
@@ -98,7 +97,6 @@ plugins.
 %package tools
 Summary:	GStreamer Streaming-media framework runtime
 Group:		Sound
-Requires(post):	libcap-utils
 %rename		gstreamer1.0-tools
 
 %description tools
@@ -283,7 +281,7 @@ install -m755 %{S:11} -D %{buildroot}%{_rpmconfigdir}/%{name}.prov
 %{_bindir}/gst-typefind-%{api}
 %dir %{_libdir}/%{name}-%{api}
 %{_libexecdir}/%{name}-%{api}/gst-plugin-scanner
-%{_libexecdir}/%{name}-%{api}/gst-ptp-helper
+%caps(cap_net_bind_service,cap_net_admin+ep) %{_libexecdir}/%{name}-%{api}/gst-ptp-helper
 %{_libexecdir}/%{name}-%{api}/gst-completion-helper
 %{_libexecdir}/%{name}-%{api}/gst-hotdoc-plugins-scanner
 %{_libexecdir}/%{name}-%{api}/gst-plugins-doc-cache-generator
