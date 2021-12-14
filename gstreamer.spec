@@ -228,7 +228,6 @@ applications and plugins for GStreamer.
 	-Dexamples=disabled \
 	-Ddbghelp=disabled \
 	-Dintrospection=disabled \
-	-Dgtk-doc=disabled \
 	-Ddoc=disabled
 %endif
 
@@ -239,11 +238,10 @@ applications and plugins for GStreamer.
 	-Dexamples=disabled \
 	-Ddbghelp=disabled \
 %if %{with docs}
-	-Dgtk-doc=enabled \
+	-Ddoc=enabled
 %else
-	-Dgtk-doc=disabled \
-%endif
 	-Ddoc=disabled
+%endif
 
 %build
 %if %{with compat32}
