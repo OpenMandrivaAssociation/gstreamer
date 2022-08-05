@@ -271,7 +271,7 @@ install -m755 %{S:11} -D %{buildroot}%{_rpmconfigdir}/%{name}.prov
 %{_sbindir}/setcap cap_net_bind_service,cap_net_admin+ep %{_libexecdir}/%{name}-%{api}/gst-ptp-helper
 
 %files tools -f %{name}-%{api}.lang
-%doc AUTHORS COPYING README NEWS
+%doc AUTHORS COPYING README* NEWS
 %dir %{_var}/cache/%{name}-%{api}
 %{_bindir}/gst-inspect-%{api}
 %{_bindir}/gst-launch-%{api}
