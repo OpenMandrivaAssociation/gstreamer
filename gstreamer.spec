@@ -284,6 +284,7 @@ install -m755 %{S:11} -D %{buildroot}%{_rpmconfigdir}/%{name}.prov
 %{_libexecdir}/%{name}-%{api}/gst-completion-helper
 %{_libexecdir}/%{name}-%{api}/gst-hotdoc-plugins-scanner
 %{_libexecdir}/%{name}-%{api}/gst-plugins-doc-cache-generator
+%{_libexecdir}/%{name}-%{api}/gst-ptp-helper-test
 %{_datadir}/bash-completion/completions/*
 %{_datadir}/bash-completion/helpers/*
 %{_libdir}/%{name}-%{api}/libgstcoreelements.so
