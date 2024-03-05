@@ -239,6 +239,7 @@ applications and plugins for GStreamer.
 	-Dtests=disabled \
 	-Dexamples=disabled \
 	-Ddbghelp=disabled \
+        --buildtype=release \
 %if %{with docs}
 	-Ddoc=enabled
 %else
