@@ -42,7 +42,7 @@ BuildRequires:	bison
 BuildRequires:	chrpath
 BuildRequires:	flex
 BuildRequires:	gettext-devel
-BuildRewuires:  rust
+BuildRequires:  rust
 BuildRequires:	pkgconfig(check)
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gobject-introspection-1.0)
