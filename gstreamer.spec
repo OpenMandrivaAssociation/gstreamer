@@ -25,7 +25,7 @@
 
 Name:		gstreamer
 Summary:	GStreamer Streaming-media framework runtime
-Version:	1.22.10
+Version:	1.24.0
 Release:	1
 License:	LGPLv2+
 Group:		Sound
@@ -42,6 +42,7 @@ BuildRequires:	bison
 BuildRequires:	chrpath
 BuildRequires:	flex
 BuildRequires:	gettext-devel
+BuildRequires:  rust
 BuildRequires:	pkgconfig(check)
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gobject-introspection-1.0)
@@ -238,6 +239,7 @@ applications and plugins for GStreamer.
 	-Dtests=disabled \
 	-Dexamples=disabled \
 	-Ddbghelp=disabled \
+        --buildtype=release \
 %if %{with docs}
 	-Ddoc=enabled
 %else
@@ -284,6 +286,7 @@ install -m755 %{S:11} -D %{buildroot}%{_rpmconfigdir}/%{name}.prov
 %{_libexecdir}/%{name}-%{api}/gst-completion-helper
 %{_libexecdir}/%{name}-%{api}/gst-hotdoc-plugins-scanner
 %{_libexecdir}/%{name}-%{api}/gst-plugins-doc-cache-generator
+%{_libexecdir}/%{name}-%{api}/gst-ptp-helper-test
 %{_datadir}/bash-completion/completions/*
 %{_datadir}/bash-completion/helpers/*
 %{_libdir}/%{name}-%{api}/libgstcoreelements.so
