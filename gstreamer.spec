@@ -25,11 +25,11 @@
 
 Name:		gstreamer
 Summary:	GStreamer Streaming-media framework runtime
-Version:	1.24.0
+Version:	1.24.2
 Release:	1
 License:	LGPLv2+
 Group:		Sound
-Url:		http://gstreamer.freedesktop.org/
+Url:		https://gstreamer.freedesktop.org/
 Source0: 	https://gstreamer.freedesktop.org/src/%{name}/%{name}-%{version}.tar.xz
 # RPM Provides: generator
 Source10:	gstreamer.attr
