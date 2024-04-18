@@ -1,6 +1,6 @@
-diff -up gstreamer-1.24.0/tools/gst-inspect.c.1~ gstreamer-1.24.0/tools/gst-inspect.c
---- gstreamer-1.24.0/tools/gst-inspect.c.1~	2024-03-05 00:51:42.000000000 +0100
-+++ gstreamer-1.24.0/tools/gst-inspect.c	2024-03-05 17:05:31.095700288 +0100
+diff -up gstreamer-1.24.2/tools/gst-inspect.c.1~ gstreamer-1.24.2/tools/gst-inspect.c
+--- gstreamer-1.24.2/tools/gst-inspect.c.1~	2024-04-09 22:48:55.000000000 +0200
++++ gstreamer-1.24.2/tools/gst-inspect.c	2024-04-18 16:54:42.555724571 +0200
 @@ -1934,11 +1934,229 @@ print_tracer_info (GstPluginFeature * fe
    return 0;
  }
@@ -336,8 +336,8 @@ diff -up gstreamer-1.24.0/tools/gst-inspect.c.1~ gstreamer-1.24.0/tools/gst-insp
 +  gboolean print_aii_rpm = FALSE;
    gboolean uri_handlers = FALSE;
    gboolean check_exists = FALSE;
-   gboolean color_always = FALSE;
-@@ -2190,6 +2430,9 @@ real_main (int argc, char *argv[])
+   gboolean check_version = FALSE;
+@@ -2191,6 +2431,9 @@ real_main (int argc, char *argv[])
                "or all plugins provide.\n                                       "
                "Useful in connection with external automatic plugin "
                "installation mechanisms"), NULL},
@@ -347,7 +347,7 @@ diff -up gstreamer-1.24.0/tools/gst-inspect.c.1~ gstreamer-1.24.0/tools/gst-insp
      {"plugin", '\0', 0, G_OPTION_ARG_NONE, &plugin_name,
          N_("List the plugin contents"), NULL},
      {"types", 't', 0, G_OPTION_ARG_STRING, &types,
-@@ -2363,8 +2606,8 @@ real_main (int argc, char *argv[])
+@@ -2369,8 +2612,8 @@ real_main (int argc, char *argv[])
  
        /* if there is such a plugin, print out info */
        if (plugin) {
@@ -358,7 +358,7 @@ diff -up gstreamer-1.24.0/tools/gst-inspect.c.1~ gstreamer-1.24.0/tools/gst-insp
          } else {
            print_plugin_info (plugin);
            print_plugin_status (plugin);
-@@ -2377,8 +2620,8 @@ real_main (int argc, char *argv[])
+@@ -2383,8 +2626,8 @@ real_main (int argc, char *argv[])
            plugin = gst_plugin_load_file (arg, &error);
  
            if (plugin) {
