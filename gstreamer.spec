@@ -352,6 +352,7 @@ install -m755 %{S:11} -D %{buildroot}%{_rpmconfigdir}/%{name}.prov
 %{_rpmconfigdir}/%{name}.prov
 %{_datadir}/gdb/auto-load/%{_libdir}/*.py
 %{_datadir}/%{name}-%{api}/gdb
+%{_datadir}/cmake/FindGStreamer.cmake
 
 %if %{with compat32}
 %files -n %{lib32name}
