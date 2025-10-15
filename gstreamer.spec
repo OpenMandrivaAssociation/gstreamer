@@ -25,7 +25,7 @@
 
 Name:		gstreamer
 Summary:	GStreamer Streaming-media framework runtime
-Version:	1.26.6
+Version:	1.26.7
 Release:	1
 License:	LGPLv2+
 Group:		Sound
