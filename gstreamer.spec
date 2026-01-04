@@ -87,6 +87,7 @@ BuildRequires:	devel(libcap)
 BuildRequires:	devel(libdw)
 BuildRequires:	devel(liblzma)
 BuildRequires:	devel(libelf)
+BuildRequires:	devel(libzstd)
 BuildRequires:	libunwind-nongnu-devel
 %endif
 
