@@ -26,7 +26,7 @@
 Name:		gstreamer
 Summary:	GStreamer Streaming-media framework runtime
 Version:	1.28.1
-Release:	1
+Release:	2
 License:	LGPLv2+
 Group:		Sound
 Url:		https://gstreamer.freedesktop.org/
@@ -46,7 +46,7 @@ BuildRequires:  rust
 BuildRequires:	pkgconfig(check)
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gobject-introspection-1.0)
-BuildRequires:	pkgconfig(libxml-2.0)
+BuildRequires:	pkgconfig(libxml-2.0) >= 2.15.2
 BuildRequires:	pkgconfig(libdw)
 BuildRequires:	pkgconfig(popt)
 BuildRequires:	pkgconfig(libcap)
