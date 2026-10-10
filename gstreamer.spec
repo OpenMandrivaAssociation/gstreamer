@@ -73,6 +73,8 @@ BuildRequires:	docbook-dtd412-xml
 BuildRequires:	ghostscript
 %endif
 %if %{with compat32}
+# clang -m32 links through the i686 cross sysroot.
+BuildRequires:	cross-i686-openmandriva-linux-gnu-clang
 BuildRequires:	devel(libglib-2.0)
 BuildRequires:	devel(libgobject-2.0)
 BuildRequires:	devel(libgio-2.0)
