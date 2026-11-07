@@ -1,11 +1,12 @@
 diff -up gstreamer-1.24.2/tools/gst-inspect.c.1~ gstreamer-1.24.2/tools/gst-inspect.c
 --- gstreamer-1.24.2/tools/gst-inspect.c.1~	2024-04-09 22:48:55.000000000 +0200
 +++ gstreamer-1.24.2/tools/gst-inspect.c	2024-04-18 16:54:42.555724571 +0200
-@@ -1934,11 +1934,229 @@ print_tracer_info (GstPluginFeature * fe
+@@ -1934,11 +1934,230 @@ print_tracer_info (GstPluginFeature * fe
    return 0;
  }
  
 +
++static void
 +print_gst_structure_append_field (GList * strings, const char *field)
 +{
 +  GList *s;
